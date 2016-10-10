@@ -12,8 +12,10 @@
 			var senhaConfirmacao = document.getElementById("senhaConfirmacao").value;
 			
 			var mensagens = [];
+			var validacaoEmail = /\w+@\w+\.+[a-z]/;
+			var validacaoSenha = /^(?=(?:.*?[A-Z]){2})(?=(?:.*?[0-9]){2})(?=(?:.*?[!@#$%*()_+^&}{:;?.]){1})(?!.*\s)[0-9a-zA-Z!@#$%;*(){}_+^&]*$/;
 			
-			if(nome == ""){
+			if(nome === ""){
 				mensagens.push("Preencha um Nome");
 			}
 			
@@ -25,15 +27,23 @@
 				mensagens.push("Preencha o Email");
 			}
 			
-			if(senha == ""){
-				mensagens.push("Preencha uma Senha");
+			if(!validacaoEmail.test(email)){
+				mensagens.push("Preencha um endereço de email válido")
 			}
 			
-			if(senhaConfirmacao == ""){
+			if(senha == "" || senha.length < 8){
+				mensagens.push("Preencha uma Senha com no mínimo 8 caracteres");
+			}
+			else if (!validacaoSenha.exec(senha)){
+				mensagens.push("A senha deve conter no mínimo 2 caracteres em maiúsculo, 2 números e 1 caractere especial!");
+			}
+			else if (senha != senhaConfirmacao){
+				mensagens.push("As senhas não coincidem")
+			}
+			
+			if(senhaConfirmacao == "" || senhaConfirmacao.length < 8){
 				mensagens.push("Preencha a Confirmação da Senha");
 			}
-
-			
 			
 			if(mensagens.length){
 			var notifica = "Seu formulário possui erros:\n\n";
@@ -51,7 +61,11 @@
 			}
 			
 			
+			
+			
  }
+
+
       </script>
       <title>Cadastro de Cliente</title>
    </head>
